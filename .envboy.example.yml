@@ -1,0 +1,31 @@
+# Copy to ~/.config/envboy/config.yml (or pass --config).
+# Every key is optional.
+
+# Scanned when a command gets no directory arguments.
+roots:
+  - ~/Proyek
+  - ~/Projects
+
+# Where backup writes and restore/status read.
+vault: ~/envboy.vault
+
+# Encrypt to age public keys instead of a passphrase. Your own key from
+# `envboy keygen` is used automatically; add teammates' keys here.
+# recipients:
+#   - age1qyqszqgpqyqszqgpqyqszqgpqyqszqgpqyqszqgpqyqszqgpqyqs3290gq
+
+# Identity files used to decrypt (default: ~/.config/envboy/key.txt if it exists).
+# identities:
+#   - ~/.config/envboy/key.txt
+
+# Basename globs that count as env files.
+patterns: [".env", ".env.*", "*.env"]
+
+# Basename globs that never count (editor and restore backups).
+exclude: ["*.bak", "*.bak.*", "*.orig", "*.swp", "*~"]
+
+# Name segments that mark a committed template, e.g. .env.example.
+template_markers: [example, sample, template, dist, tpl]
+
+# Extra directory names to skip (added to node_modules, .venv, vendor, ...).
+skip_dirs: []

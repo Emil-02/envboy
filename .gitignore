@@ -1,0 +1,7 @@
+/envboy
+/dist/
+*.vault
+coverage.out
+.env
+.env.*
+!.env.example
