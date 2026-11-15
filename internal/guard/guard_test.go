@@ -5,6 +5,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -33,7 +34,7 @@ func TestInstallChainsAndUninstallRestores(t *testing.T) {
 	if !strings.Contains(hook, guard.Marker) || !strings.Contains(hook, `ENVBOY='/opt/it'\''s/envboy'`) {
 		t.Fatalf("hook content:\n%s", hook)
 	}
-	if st, _ := os.Stat(filepath.Join(hooks, "pre-commit")); st.Mode().Perm()&0o100 == 0 {
+	if st, _ := os.Stat(filepath.Join(hooks, "pre-commit")); runtime.GOOS != "windows" && st.Mode().Perm()&0o100 == 0 {
 		t.Fatal("hook is not executable")
 	}
 	if testutil.Read(t, filepath.Join(hooks, "pre-commit.envboy-chained")) != old {
@@ -64,7 +65,10 @@ func TestHooksPathHonored(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if res.Path != filepath.Join(repo, ".githooks", "pre-commit") {
+	// Compare by identity: temp dirs can be symlinked (macOS) or short names (Windows).
+	got, err1 := os.Stat(filepath.Dir(res.Path))
+	want, err2 := os.Stat(filepath.Join(repo, ".githooks"))
+	if err1 != nil || err2 != nil || !os.SameFile(got, want) || filepath.Base(res.Path) != "pre-commit" {
 		t.Fatalf("hook path = %s", res.Path)
 	}
 }

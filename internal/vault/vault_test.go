@@ -5,6 +5,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -72,7 +73,7 @@ func TestRoundTripKeysNeverPrompts(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if st, _ := os.Stat(keyFile); st.Mode().Perm() != 0o600 {
+	if st, _ := os.Stat(keyFile); runtime.GOOS != "windows" && st.Mode().Perm() != 0o600 {
 		t.Fatalf("key mode = %v", st.Mode().Perm())
 	}
 	if _, err := keys.Generate(keyFile); err == nil {
@@ -96,7 +97,7 @@ func TestRoundTripKeysNeverPrompts(t *testing.T) {
 	if err := vault.Write(path, sample(), enc.Recipients, true); err != nil {
 		t.Fatal(err)
 	}
-	if st, _ := os.Stat(path); st.Mode().Perm() != 0o600 {
+	if st, _ := os.Stat(path); runtime.GOOS != "windows" && st.Mode().Perm() != 0o600 {
 		t.Fatalf("vault mode = %v", st.Mode().Perm())
 	}
 	u, err := src.Unlocker()

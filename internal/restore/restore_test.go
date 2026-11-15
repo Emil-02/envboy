@@ -3,6 +3,7 @@ package restore_test
 import (
 	"os"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/Emil-02/envboy/internal/backup"
@@ -91,7 +92,7 @@ func TestPlanAndApply(t *testing.T) {
 	if testutil.Read(t, target) != "A=1\n" {
 		t.Fatal("web .env not restored")
 	}
-	if st, _ := os.Stat(target); st.Mode().Perm() != 0o600 {
+	if st, _ := os.Stat(target); runtime.GOOS != "windows" && st.Mode().Perm() != 0o600 {
 		t.Fatalf("restored mode = %v", st.Mode().Perm())
 	}
 	if testutil.Read(t, filepath.Join(api, ".env")) != "A=local\nONLY_LOCAL=1\n" {
