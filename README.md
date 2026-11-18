@@ -4,6 +4,8 @@
 
 🇮🇩 [Baca dalam Bahasa Indonesia](README.id.md)
 
+> **Using an AI coding agent?** Install [`jaga-skill`](https://github.com/Emil-02/jaga-skill) with `npx jaga-skill init` — a gate that stops the agent before commit/deploy when secrets or personal data are detected. It also guards `.env` files.
+
 ```console
 $ envboy backup ~/Proyek
 ✓ Backed up 23 files from 14 repos to ~/envboy.vault (passphrase)
