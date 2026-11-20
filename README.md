@@ -1,5 +1,7 @@
 # envboy 🤠
 
+[![jaga](https://jaga-card.vercel.app/api/badge?owner=Emil-02&repo=envboy)](https://jaga-card.vercel.app/r/Emil-02/envboy)
+
 **Back up, restore, check and guard every `.env` file across all your repos.** One Go binary, no server, no account.
 
 🇮🇩 [Baca dalam Bahasa Indonesia](README.id.md)
